@@ -1,0 +1,54 @@
+<html>
+<head>
+<title> Manage</title>
+</head>
+<body>
+<?php echo "MANAGE";?>
+
+<td><br><a href="../new/" >New</a></td>
+<table border = 2 width='50%'>
+    <tr>
+        <th>Id      </th>
+        <th>Thumb   </th>
+        <th>Title   </th>
+        <th>Status  </th>
+        <th colspan="3">Action</th>
+    </tr>
+    <?php
+        $db = $data['db'];
+        $conn = $data['con'];
+        $tin_trang =4;
+        $tong_tin = mysqli_num_rows($db);
+        $so_trang = ceil($tong_tin/$tin_trang);
+        // echo $tong_tin;
+        // echo $so_trang;
+        if ($data['page']=='') $page =1;
+            else $page = $data['page'];// page hien tai 
+        $start = ($page-1)*$tin_trang;
+        $result1 = mysqli_query($conn, "SELECT * FROM TB LIMIT $start, $tin_trang");
+
+    ?>
+    <?php 
+        // $result = $data['db'];
+        while ($row = mysqli_fetch_array($db)) { ?>
+		<tr>
+			<td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['image']; ?></td>
+			<td><?php echo $row['title']; ?></td>
+            <td><?php echo $row['status']; ?></td>
+            <td>
+				<a href="../show/<?php echo $row['id']; ?>" >Show</a>
+			</td>
+			<td>
+				<a href="../edit/<?php echo $row['id']; ?>" >Edit</a>
+			</td>
+			<td>
+				<a href="../delete/<?php echo $row['id']; ?>" >Delete</a>
+			</td>
+            
+		</tr>
+	<?php } ?>
+    
+</table >
+</body>
+</html>
